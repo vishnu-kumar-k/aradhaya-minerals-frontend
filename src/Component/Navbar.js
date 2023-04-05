@@ -1,34 +1,34 @@
 import { useContext, useEffect } from "react";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link, useNavigate } from "react-router-dom";
-import { AdminDetails } from "./Context";
 import "../css/Navbaradmin.css";
 import  axios  from "../Axios/Axios";
+import { useRecoilState } from "recoil";
+import { AdminDetails, Load, Width } from "../Atom/Atom";
+import Loading from "./Loading";
 const Menu = () => {
   const navigate = useNavigate();
-  const adminDetails = useContext(AdminDetails);
-  
+  const[admindetails,setAdmindetails]=useRecoilState(AdminDetails);
+  const[loading,setLoading]=useRecoilState(Load);
+  const[width,setWidth]=useRecoilState(Width)
   useEffect(()=>{
 
-    if(localStorage.getItem("admin_jwt")!==null && localStorage.getItem("admin_jwt")!==undefined)
+    if(admindetails.jwt!==undefined && admindetails.jwt!==null)
     {
+      setLoading(true);
         axios.post("/admin/verify",{
-            jwt_token:localStorage.getItem("admin_jwt")
+            jwt_token:admindetails.jwt
         }).then(async(result)=>{
+          setLoading(false)
             if(!result.data.status)
             {
                 navigate("/admin/login");
             }
             else
             {
-                console.log(result.data);
-                adminDetails.setName(result.data.name) ;
-                adminDetails.setStatus(true);
-                console.log(adminDetails.name )
+                setAdmindetails({status:true,name:result.data.name,jwt:admindetails.jwt});
             }
         }).catch((err)=>console.log(err));
     }
@@ -42,10 +42,11 @@ const Menu = () => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    localStorage.removeItem("admin_jwt");
+    localStorage.removeItem("adminJwt");
     navigate("/admin/login");
   };
-  return (
+  return (<>
+    {loading?(<></>):(
     <Container>
         <h1 className="admin">Admin Panel</h1>
       <Navbar bg="light" expand="lg">
@@ -57,18 +58,21 @@ const Menu = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Link to="/admin" className="nav-link">
-              Add new Product
+            <Link to="/admin/addcan" className="nav-link">
+              Add new Can
             </Link>
-            <Link to="/admin/adduser" className="nav-link">
-              Add new admin user
+            <Link to="/admin/addadmin" className="nav-link">
+              Add admin 
             </Link>
             <Link to="/admin/viewproduct" className="nav-link">
-              View products
+              Can
+            </Link>
+            <Link to="/admin" className="nav-link">
+               Order
             </Link>
           </Nav>
           <div className="d-flex gap-3">
-            <Link className="nav-link">{adminDetails.name}</Link>{"  "}
+            <Link className="nav-link">{admindetails.name}</Link>{"  "}
           
             <Link className="nav-link" onClick={handleLogout}>
               Logout
@@ -76,7 +80,7 @@ const Menu = () => {
           </div>
         </Navbar.Collapse>
       </Navbar>
-    </Container>
+    </Container>)}</>
   );
 };
 

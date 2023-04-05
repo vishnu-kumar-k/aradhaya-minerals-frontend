@@ -1,0 +1,19 @@
+.header-view
+{
+    font-size: 1.3em;
+    font-weight: 600;
+    padding: 1em;
+    text-align: center;
+    border-bottom: solid 2px red;
+    
+}
+.view-product
+{
+    padding: .3em;
+    text-align: center;
+}
+.product-edit
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
