@@ -1,5 +1,5 @@
-import React, {  useState } from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Table, Form } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "../Axios/Axios";
 
@@ -31,79 +31,84 @@ const Display = ({
     e.preventDefault();
     setInputform(!inputform);
   };
-  const update=(e)=>{
+  const update = (e) => {
     e.preventDefault();
-    if(products_available===form.available && products_price===form.price && products_minimum_quantity===form.min)
-    {
-      toast.warning("No changes")
+    if (
+      products_available === form.available &&
+      products_price === form.price &&
+      products_minimum_quantity === form.min
+    ) {
+      toast.warning("No changes");
+    } else {
+      axios.put("/admin/edit", {
+        form,
+      }).then((res) => {
+        setInputform(false);
+        if (res.data.status) {
+          toast.success(res.data.msg);
+        }
+      });
     }
-    else{
-    axios.put("/admin/edit",{
-      form
+  };
 
-    }).then((res)=>{
-      setInputform(false);
-      if(res.data.status)
-      {
-        toast.success(res.data.msg)
-      }
-    })
-  }
-  }
   return (
-    <div className="view-product">
-      <ToastContainer />
-      <Row >
-        <Col xs={2}>{products_litre}</Col>
-        <Col xs={2}>{products_price}</Col>
-        <Col xs={3}>{products_minimum_quantity}</Col>
-        <Col xs={2}>{products_available}</Col>
-        <Col xs={3}>
-          <button className="btn btn-primary" onClick={handle}>
-            {inputform ? "Cancel" : "Edit"}
-          </button>
-        </Col>
-      </Row>
-      {inputform ? (
-        <Row className="product-edit">
-          <Col xs={2}>
-            <Form.Control
-              value={form.litre}
-              name="litre"
-              onChange={(e) => handleChange(e)}
-            />
-          </Col>
-          <Col xs={2}>
-            <Form.Control
-              value={form.price}
-              name="price"
-              onChange={(e) => handleChange(e)}
-            />
-          </Col>
-          <Col xs={3}>
-            <Form.Control
-              value={form.min}
-              name="min"
-              onChange={(e) => handleChange(e)}
-            />
-          </Col>
-          <Col xs={2}>
-          <Form.Control
-              value={form.available}
-              name="available"
-              onChange={(e) => handleChange(e)}
-            />
-          </Col>
-          <Col xs={3}>
-            <button className="btn btn-outline-success" onClick={update}>
-              Update
-            </button>
-          </Col>
-        </Row>
-      ) : (
-        <></>
-      )}
-    </div>
+    
+     <>
+          <tr>
+            <td>{products_litre}</td>
+            <td>{products_price}</td>
+            <td>{products_minimum_quantity}</td>
+            <td>{products_available}</td>
+            <td>
+              <button className="btn btn-primary" onClick={handle}>
+                {inputform ? "Cancel" : "Edit"}
+              </button>
+            </td>
+          </tr>
+          {inputform && (
+            <tr className="product-edit">
+              <td>
+                <Form.Control
+                  value={form.litre}
+                  name="litre"
+                  onChange={(e) => handleChange(e)}
+                />
+              </td>
+              <td>
+                <Form.Control
+                  value={form.price}
+                  name="price"
+                  onChange={(e) => handleChange(e)}
+                />
+              </td>
+              <td>
+                <Form.Control
+                  value={form.min}
+                  name="min"
+                  onChange={(e) => handleChange(e)}
+                />
+              </td>
+              <td>
+                <Form.Control
+                  value={form.available}
+                  name="available"
+                  onChange={(e) => handleChange(e)}
+                />
+              </td>
+              <td>
+                <button
+                  className="btn btn-outline-success"
+                  onClick={update}
+                >
+                  Update
+                </button>
+              </td>
+            </tr>
+          )}
+          <ToastContainer />
+        </>
+    
   );
 };
+
 export default Display;

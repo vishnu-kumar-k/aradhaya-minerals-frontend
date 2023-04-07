@@ -16,7 +16,3 @@ export const Load=atom({
     default:false
 })
 
-export const Width=atom({
-    key:"Width",
-    default:1000
-})

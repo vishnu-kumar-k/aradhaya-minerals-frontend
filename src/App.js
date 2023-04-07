@@ -27,10 +27,6 @@ function App() {
       {
       path:"/admin/addadmin",
       element:<><Menu /><AdminRegister /></>
-      },
-      {
-        path:"/admin/addcan",
-        element:<><Menu /><Addproduct /> </>
       }
     ]
   )

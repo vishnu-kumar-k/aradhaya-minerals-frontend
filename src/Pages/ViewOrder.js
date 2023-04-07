@@ -13,7 +13,7 @@ import DisplayOrder from './DisplayOrder';
   })
   return (
     <div>
-      <Container fluid>
+      
       {order?(<>{order.map((p,i)=>(
             <DisplayOrder
             id={p.orderId}
@@ -27,7 +27,7 @@ import DisplayOrder from './DisplayOrder';
             status={p.orderStatus}
              />
         ))}</>):(<></>)}
-      </Container>
+      
     </div>
   )
 }

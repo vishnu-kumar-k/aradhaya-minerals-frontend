@@ -1,14 +1,16 @@
 import axios from '../Axios/Axios';
 import React, { useContext, useEffect, useState } from 'react'
 import Display from './Display';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import "../css/Viewproduct.css"
 import { useRecoilState } from 'recoil';
 import { Load } from '../Atom/Atom';
 import Loading from '../Component/Loading';
+import Addproduct from './Addproduct';
 export const Viewproduct = () => {
     const[loading,setLoading]=useRecoilState(Load);
     const [product,setProduct]=useState();
+    const [addProduct,setAddProduct]=useState(false);
     useEffect(()=>{
         setLoading(true);
         axios.post("/getproducts").then(async(res)=>
@@ -18,16 +20,26 @@ export const Viewproduct = () => {
         }).catch((err)=>console.log(err))
     },[])
     
-
+    const handle=(e)=>
+    {
+      e.preventDefault();
+      setAddProduct(!addProduct);
+    }
+    console.log(addProduct);
   return (<>{loading?(<Loading />):(
     <div>
-        <Container fluid>
-        <Row className='header-view'>
-            <Col xs={2}>Capacity</Col>
-            <Col xs={2}>Price </Col>
-            <Col xs={3} >minimum</Col>
-            <Col xs={2}>Available</Col>
-        </Row>
+        <Container>
+        <Table responsive striped bordered hover>
+        <thead>
+          <tr>
+            <th>Litre</th>
+            <th>Price</th>
+            <th>Minimum Quantity</th>
+            <th>Available</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
         {product?(<>{product.map((p,i)=>(
             <Display
             products_id= {p.canId}
@@ -39,9 +51,14 @@ export const Viewproduct = () => {
             products_img={p.canImage}
              />
         ))}</>):(<></>)}
-        
+        </tbody>
+        </Table>
+        <button className='btn btn-outline-secondary d-flex right' onClick={handle}>{addProduct?("Cancel"):("Add a product")}</button>
+        {addProduct?(<Addproduct />):(<></>)}
         </Container>
-    </div>)}</>
+    </div>)}
+    
+    </>
 
   )
 }

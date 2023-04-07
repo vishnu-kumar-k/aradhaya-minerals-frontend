@@ -12,7 +12,6 @@ const Menu = () => {
   const navigate = useNavigate();
   const[admindetails,setAdmindetails]=useRecoilState(AdminDetails);
   const[loading,setLoading]=useRecoilState(Load);
-  const[width,setWidth]=useRecoilState(Width)
   useEffect(()=>{
 
     if(admindetails.jwt!==undefined && admindetails.jwt!==null)
@@ -49,7 +48,7 @@ const Menu = () => {
     {loading?(<></>):(
     <Container>
         <h1 className="admin">Admin Panel</h1>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" className="position-static">
         <Navbar.Brand>Aradhaya minerals</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -58,9 +57,7 @@ const Menu = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Link to="/admin/addcan" className="nav-link">
-              Add new Can
-            </Link>
+            
             <Link to="/admin/addadmin" className="nav-link">
               Add admin 
             </Link>
