@@ -48,7 +48,8 @@ const Menu = () => {
     {loading?(<></>):(
     <Container>
         <h1 className="admin">Admin Panel</h1>
-      <Navbar bg="light" expand="lg" className="position-static">
+      <Navbar bg="light" expand="lg" className="fixed-top">
+        <Container>
         <Navbar.Brand>Aradhaya minerals</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -76,6 +77,7 @@ const Menu = () => {
             </Link>
           </div>
         </Navbar.Collapse>
+        </Container>
       </Navbar>
     </Container>)}</>
   );

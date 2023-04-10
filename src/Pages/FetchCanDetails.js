@@ -3,7 +3,7 @@ import { Table, Form } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "../Axios/Axios";
 
-const Display = ({
+const FetchCanDetails = ({
   products_id,
   products_name,
   products_litre,
@@ -111,4 +111,4 @@ const Display = ({
   );
 };
 
-export default Display;
+export default FetchCanDetails;

@@ -11,7 +11,7 @@ import { useRecoilState } from 'recoil';
 import { AdminDetails, Load } from '../Atom/Atom';
 import Loading from '../Component/Loading';
 
- const AdminLogin=()=>{
+ const Login=()=>{
     const navigate=useNavigate()
     const[password,setpassword]=useState("")
     const[number,setnumber]=useState("")
@@ -64,4 +64,4 @@ import Loading from '../Component/Loading';
     )
 }
 
-export default AdminLogin;
+export default Login;

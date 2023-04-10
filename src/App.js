@@ -1,12 +1,10 @@
 import {  createBrowserRouter, RouterProvider } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Addproduct from "./Pages/Addproduct";
-import AdminRegister from "./Pages/adminregister";
-import AdminLogin from "./Pages/adminlogin";
+import CreateAdmin from "./Pages/CreateAdmin";
+import Login from "./Pages/Login";
 import Menu from "./Component/Navbar";
-import Viewproduct from "./Pages/Viewproduct";
-import ViewOrder from "./Pages/ViewOrder";
+import FetchCan from "./Pages/FetchCan";
+import FetchOrder from "./Pages/FetchOrder";
 import { RecoilRoot } from "recoil";
 
 function App() {
@@ -14,19 +12,19 @@ function App() {
     [
       {
         path:"/admin/login",
-        element:<AdminLogin />
+        element:<Login />
       },
       {
         path:"/admin",
-        element:<><Menu /><ViewOrder /> </>
+        element:<><Menu /><FetchOrder /> </>
       },
       {
         path:"/admin/viewproduct",
-        element:<><Menu /><Viewproduct /></>
+        element:<><Menu /><FetchCan /></>
       },
       {
       path:"/admin/addadmin",
-      element:<><Menu /><AdminRegister /></>
+      element:<><Menu /><CreateAdmin /></>
       }
     ]
   )

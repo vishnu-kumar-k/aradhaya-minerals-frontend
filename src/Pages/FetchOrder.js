@@ -1,9 +1,7 @@
 import axios from '../Axios/Axios'
 import React, { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap';
-import DisplayOrder from './DisplayOrder';
-
- const ViewOrder = () => {
+import FetchOrderDetails from './FetchOrderDetails';
+ const FetchOrder = () => {
   const [order,setOrder]=useState();
   useEffect(()=>
   {
@@ -15,7 +13,7 @@ import DisplayOrder from './DisplayOrder';
     <div>
       
       {order?(<>{order.map((p,i)=>(
-            <DisplayOrder
+            <FetchOrderDetails
             id={p.orderId}
             customerName={p.customerName}
             customerAddress={p.customerAddress}
@@ -31,4 +29,4 @@ import DisplayOrder from './DisplayOrder';
     </div>
   )
 }
-export default ViewOrder;
+export default FetchOrder;

@@ -7,7 +7,7 @@ import {useState} from 'react';
 import axios from '../Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const AdminRegister=()=>{
+const CreateAdmin=()=>{
     const navigate=useNavigate()
     const[name,setname]=useState("")
     const[password,setpassword]=useState("")
@@ -53,4 +53,4 @@ const AdminRegister=()=>{
     )
 }
 
-export default AdminRegister;
+export default CreateAdmin;

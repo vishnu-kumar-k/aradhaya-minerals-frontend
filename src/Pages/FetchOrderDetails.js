@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { Load, Width } from "../Atom/Atom";
-import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { useRecoilState } from "recoil";
+import { Load } from "../Atom/Atom";
+import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import axios from "../Axios/Axios";
 import Loading from "../Component/Loading";
 import "../css/Order.css";
-import { BsArrowRepeat } from 'react-icons/bs';
 
-import { toast , ToastContainer} from "react-toastify";
-const DisplayOrder = ({
+import { toast, ToastContainer } from "react-toastify";
+const FetchOrderDetails = ({
   id,
   total,
   customerName,
@@ -21,7 +20,7 @@ const DisplayOrder = ({
 }) => {
   const [cart, setCart] = useState();
   const [loading, setLoading] = useRecoilState(Load);
-  const[sum,setSum]=useState();
+  const [sum, setSum] = useState();
   useEffect(() => {
     setLoading(true);
     axios
@@ -31,7 +30,6 @@ const DisplayOrder = ({
           await setCart(res.data.data);
           console.log(res);
           await setLoading(false);
-          
         }
       })
       .catch((err) => console.log(err));
@@ -41,24 +39,27 @@ const DisplayOrder = ({
     let newStatus = 0;
     if (status == 1) {
       newStatus = 2;
-    } else if (status ==2) {
+    } else if (status == 2) {
       newStatus = 3;
     } else {
       return;
     }
     setLoading(true);
-    axios.post("/admin/update", {
+    axios
+      .post("/admin/update", {
         orderId: id,
-        status: newStatus
-      }).then((res) => {
-        console.log(res)
+        status: newStatus,
+      })
+      .then((res) => {
+        console.log(res);
         setLoading(false);
         if (res.data.status) {
           toast.success("Updated Successfully");
         }
-      }).catch((err) => console.log(err))
+      })
+      .catch((err) => console.log(err));
   };
-  
+
   return (
     <div>
       {loading ? (
@@ -70,50 +71,56 @@ const DisplayOrder = ({
               <ListGroup.Item className="card-header">
                 <Row>
                   <Col md={1} xs={4}>
-                   <span> Name</span>
+                    <span> Name</span>
                   </Col>
                   <Col md={1} sm={8} xs={8}>
-                  <span> {customerName}</span>
+                    <b> {customerName}</b>
                   </Col>
 
                   <Col md={1} xs={4}>
-                  <span>Address</span>  
+                    <span>Address</span>
                   </Col>
                   <Col md={1} sm={8} xs={8}>
-                    {customerAddress}
+                    <b>{customerAddress}</b>
                   </Col>
                   <Col md={1} xs={4}>
-                  <span>ph no</span>
+                    <span>ph no</span>
                   </Col>
                   <Col md={1} sm={8} xs={8}>
-                    <a href={phoneNumber}>{phoneNumber}</a>
+                    <b>
+                      <a href={phoneNumber}>{phoneNumber}</a>
+                    </b>
                   </Col>
                   <Col md={1} xs={4}>
-                  <span>PinCode</span>
+                    <span>PinCode</span>
                   </Col>
                   <Col md={1} sm={8} xs={8}>
-                    {pinCode}
+                    <b>{pinCode}</b>
                   </Col>
                   <Col md={1} xs={4}>
-                  <span>OrderDate</span>
+                    <span>OrderDate</span>
                   </Col>
 
                   <Col md={1} sm={8} xs={8}>
-                    {new Date(orderDate).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
+                    <b>
+                      {new Date(orderDate).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </b>
                   </Col>
                   <Col md={1} xs={4}>
-                  <span>deliveryDate</span>
+                    <span>deliveryDate</span>
                   </Col>
                   <Col md={1} sm={8} xs={8}>
-                    {new Date(deliveryDate).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
+                    <b>
+                      {new Date(deliveryDate).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </b>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -144,19 +151,35 @@ const DisplayOrder = ({
                 </table>
 
                 <Row>
-                  
                   <Col md={6} xs={6} sm={6}>
-                  <Col md={12}>Total Amount:{total}</Col>
-                    Status: 
-                    {status == 1
-                      ? <strong style={{color:"#311023"}}>Not Viewed</strong>
-                      : status == 2
-                      ? <strong style={{color:"#ba112b"}}>Progress</strong>
-                      : <strong style={{color:"#1d8951"}}>Delivered</strong>}
+                    <Col md={12}>Total Amount:{total}</Col>
+                    Status:
+                    {status == 1 ? (
+                      <strong style={{ color: "#311023" }}>Not Viewed</strong>
+                    ) : status == 2 ? (
+                      <strong style={{ color: "#ba112b" }}>Progress</strong>
+                    ) : (
+                      <strong style={{ color: "#1d8951" }}>Delivered</strong>
+                    )}
                   </Col>
                   <Col md={6} xs={6} sm={6}>
-                    {status==1?(<button onClick={handleUpdate} className="btn btn-primary">Mark as Progress</button>):(status==2?(<button onClick={handleUpdate} className="btn btn-secondary">Mark as Delivered</button>):(<></>))}
-                    
+                    {status == 1 ? (
+                      <button
+                        onClick={handleUpdate}
+                        className="btn btn-primary"
+                      >
+                        Mark as Progress
+                      </button>
+                    ) : status == 2 ? (
+                      <button
+                        onClick={handleUpdate}
+                        className="btn btn-secondary"
+                      >
+                        Mark as Delivered
+                      </button>
+                    ) : (
+                      <></>
+                    )}
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -169,4 +192,4 @@ const DisplayOrder = ({
   );
 };
 
-export default DisplayOrder;
+export default FetchOrderDetails;

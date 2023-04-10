@@ -9,3 +9,12 @@
 {
     background-color: #fffaf2;
 }
+.order-details span
+{
+    text-decoration: underline;
+    color: rgb(255, 0, 0);
+}
+.order-details b
+{
+    text-decoration: none;
+}

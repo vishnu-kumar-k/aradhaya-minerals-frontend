@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { Load } from "../Atom/Atom";
 import Loading from "../Component/Loading";
-const Addproduct = () => {
+const CreateCan = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -170,4 +170,4 @@ const Addproduct = () => {
     </div>)}</>
   );
 };
-export default Addproduct;
+export default CreateCan;
