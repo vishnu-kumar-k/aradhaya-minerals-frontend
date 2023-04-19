@@ -16,3 +16,24 @@ export const Load=atom({
     default:false
 })
 
+export const Status=atom({
+    key:"Status",
+    default:1
+})
+export const ShowModel=atom({
+    key:"ShowModel",
+    default:false
+})
+export const Filter=atom({
+    key:"Filter",
+    default:{status:0,pincode:0,date:"yyyy-mm-dd"}
+})
+export const FilterStatus=atom({
+    key:"FilterStatus",
+    default:false
+})
+
+export const Fetch=atom({
+    key:"Fetch",
+    default:1
+})

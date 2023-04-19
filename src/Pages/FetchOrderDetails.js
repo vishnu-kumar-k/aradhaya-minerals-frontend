@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { Load } from "../Atom/Atom";
+import { Fetch, Load } from "../Atom/Atom";
 import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import axios from "../Axios/Axios";
 import Loading from "../Component/Loading";
@@ -20,16 +20,13 @@ const FetchOrderDetails = ({
 }) => {
   const [cart, setCart] = useState();
   const [loading, setLoading] = useRecoilState(Load);
-  const [sum, setSum] = useState();
+  const [fetch, setFetch] = useRecoilState(Fetch);
   useEffect(() => {
-    setLoading(true);
     axios
       .post("/admin/cart", { orderId: id })
       .then(async (res) => {
         if (res.data.status) {
           await setCart(res.data.data);
-          console.log(res);
-          await setLoading(false);
         }
       })
       .catch((err) => console.log(err));
@@ -37,24 +34,25 @@ const FetchOrderDetails = ({
   const handleUpdate = (e) => {
     e.preventDefault();
     let newStatus = 0;
-    if (status == 1) {
+    if (status === 1) {
       newStatus = 2;
-    } else if (status == 2) {
+    } else if (status === 2) {
       newStatus = 3;
     } else {
       return;
     }
-    setLoading(true);
+
     axios
       .post("/admin/update", {
         orderId: id,
         status: newStatus,
       })
       .then((res) => {
-        console.log(res);
-        setLoading(false);
         if (res.data.status) {
-          toast.success("Updated Successfully");
+          setFetch((prev) => prev + 1);
+          toast.success("Updated successfully");
+        } else {
+          toast.error("Something went Wrong");
         }
       })
       .catch((err) => console.log(err));
@@ -144,7 +142,7 @@ const FetchOrderDetails = ({
                       </>
                     ) : (
                       <tr>
-                        <td colspan="2">No items in cart</td>
+                        <td colSpan="2">No items in cart</td>
                       </tr>
                     )}
                   </tbody>
@@ -154,23 +152,23 @@ const FetchOrderDetails = ({
                   <Col md={6} xs={6} sm={6}>
                     <Col md={12}>Total Amount:{total}</Col>
                     Status:
-                    {status == 1 ? (
+                    {status === 1 ? (
                       <strong style={{ color: "#311023" }}>Not Viewed</strong>
-                    ) : status == 2 ? (
+                    ) : status === 2 ? (
                       <strong style={{ color: "#ba112b" }}>Progress</strong>
                     ) : (
                       <strong style={{ color: "#1d8951" }}>Delivered</strong>
                     )}
                   </Col>
                   <Col md={6} xs={6} sm={6}>
-                    {status == 1 ? (
+                    {status === 1 ? (
                       <button
                         onClick={handleUpdate}
                         className="btn btn-primary"
                       >
                         Mark as Progress
                       </button>
-                    ) : status == 2 ? (
+                    ) : status === 2 ? (
                       <button
                         onClick={handleUpdate}
                         className="btn btn-secondary"

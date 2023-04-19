@@ -1,16 +1,17 @@
 import axios from "../Axios/Axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FetchCanDetails from "./FetchCanDetails";
-import { Button, Col, Container, Row, Table } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import "../css/Viewproduct.css";
-import { useRecoilState } from "recoil";
-import { Load } from "../Atom/Atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { Load, Status } from "../Atom/Atom";
 import Loading from "../Component/Loading";
 import CreateCan from "./CreateCan";
 export const FetchCan = () => {
   const [loading, setLoading] = useRecoilState(Load);
   const [product, setProduct] = useState();
   const [addProduct, setAddProduct] = useState(false);
+  const status = useRecoilValue(Status);
   useEffect(() => {
     setLoading(true);
     axios
@@ -20,7 +21,7 @@ export const FetchCan = () => {
         await setProduct(res.data.result);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [status]);
 
   const handle = (e) => {
     e.preventDefault();
