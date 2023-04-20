@@ -7,12 +7,12 @@ import { useState } from "react";
 import axios from "../Axios/Axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRecoilState } from "recoil";
 const CreateAdmin = () => {
   const navigate = useNavigate();
   const [name, setname] = useState("");
   const [password, setpassword] = useState("");
   const [number, setnumber] = useState("");
-
   const signup = (e) => {
     e.preventDefault();
     const datas = {

@@ -28,10 +28,7 @@ export const Filter=atom({
     key:"Filter",
     default:{status:0,pincode:0,date:"yyyy-mm-dd"}
 })
-export const FilterStatus=atom({
-    key:"FilterStatus",
-    default:false
-})
+
 
 export const Fetch=atom({
     key:"Fetch",

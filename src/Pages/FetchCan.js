@@ -4,7 +4,7 @@ import FetchCanDetails from "./FetchCanDetails";
 import { Container, Table } from "react-bootstrap";
 import "../css/Viewproduct.css";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Load, Status } from "../Atom/Atom";
+import {  Load, Status } from "../Atom/Atom";
 import Loading from "../Component/Loading";
 import CreateCan from "./CreateCan";
 export const FetchCan = () => {

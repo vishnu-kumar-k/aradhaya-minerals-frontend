@@ -8,7 +8,6 @@ export const Mode = () => {
   const [showModal, setShowModel] = useRecoilState(ShowModel);
   const [pinCode, setPinCode] = useState();
   const [form, setForm] = useRecoilState(Filter);
-  const [filterStatus, setFilterStatus] = useRecoilState(FilterStatus);
   useEffect(() => {
     axios
       .get("/pincode")
@@ -26,7 +25,6 @@ export const Mode = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFilterStatus(true);
     setForm((prevState) => ({
       ...prevState,
       [name]: value,
@@ -34,7 +32,6 @@ export const Mode = () => {
   };
   const handleReset = (e) => {
     e.preventDefault();
-    setFilterStatus(false);
     setForm({ status: 0, date: "yyyy-mm-dd", pincode: 0 });
   };
 

@@ -2,7 +2,7 @@ import axios from "../Axios/Axios";
 import React, { useEffect, useState } from "react";
 import FetchOrderDetails from "./FetchOrderDetails";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Fetch, Filter, FilterStatus, Load } from "../Atom/Atom";
+import { Fetch, Filter,  Load } from "../Atom/Atom";
 import Loading from "../Component/Loading";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Mode } from "./Mode";
@@ -11,7 +11,6 @@ const FetchOrder = () => {
   const [loading, setLoading] = useRecoilState(Load);
   const [count, setCount] = useState(0);
   const [len, setLen] = useState(0);
-  const [filterStatus, setFilterStatus] = useRecoilState(FilterStatus);
   const filter = useRecoilValue(Filter);
   const fetch = useRecoilValue(Fetch);
   useEffect(() => {
@@ -20,8 +19,7 @@ const FetchOrder = () => {
     axios
       .post("/admin/orders", {
         fetchCount: true,
-        filterStatus,
-        date: filter.date,
+       date: filter.date,
         status: filter.status,
         pincode: filter.pincode,
       })
@@ -32,7 +30,6 @@ const FetchOrder = () => {
     axios
       .post("/admin/orders", {
         count,
-        filterStatus,
         date: filter.date,
         status: filter.status,
         pincode: filter.pincode,
@@ -50,7 +47,7 @@ const FetchOrder = () => {
     axios
       .post("/admin/orders", {
         count: count + 1,
-        filterStatus,
+        
         date: filter.date,
         status: filter.status,
         pincode: filter.pincode,
@@ -69,7 +66,6 @@ const FetchOrder = () => {
     axios
       .post("/admin/orders", {
         count: count - 1,
-        filterStatus,
         date: filter.date,
         status: filter.status,
         pincode: filter.pincode,
