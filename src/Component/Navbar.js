@@ -16,21 +16,18 @@ const Menu = () => {
   useEffect(() => {
     if (admindetails.jwt !== undefined && admindetails.jwt !== null) {
       setLoading(true);
-      const formdata=new FormData();
-      formdata.append('name',12);
-      console.log(JSON.stringify(formdata))
+      const formdata = new FormData();
+      formdata.append("name", 12);
+      console.log(JSON.stringify(formdata));
       axios
-        .post("/admin/verify",formdata,
-          {
-            headers:{
-              jwt_token: admindetails.jwt
-            }
-            
-          }
-        )
+        .post("/admin/verify", formdata, {
+          headers: {
+            jwt_token: admindetails.jwt,
+          },
+        })
         .then(async (result) => {
           setLoading(false);
-          console.log(JSON.stringify(formdata))
+          console.log(JSON.stringify(formdata));
 
           if (!result.data.status) {
             navigate("/admin/login");
@@ -83,10 +80,15 @@ const Menu = () => {
                   <Link to="/admin" className="nav-link">
                     Order
                   </Link>
+                  <Link className="nav-link" to="/admin/user">
+                    user
+                  </Link>
+                  <Link className="nav-link" to="/admin/pincode">
+                    Pincode
+                  </Link>
                   <Link className="nav-link" onClick={handleFilter}>
                     Filter
                   </Link>
-                  
                 </Nav>
 
                 <div className="d-flex gap-3">
