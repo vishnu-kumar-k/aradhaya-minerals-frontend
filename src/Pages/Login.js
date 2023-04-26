@@ -37,7 +37,6 @@ const Login = () => {
             jwt: res.data.admin_jwt,
           });
 
-          console.log("Done");
           setTimeout(() => {
             navigate("/admin");
           }, 3000);
