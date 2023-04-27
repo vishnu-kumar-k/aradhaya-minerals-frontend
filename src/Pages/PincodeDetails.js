@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, ToastContainer } from "react-bootstrap";
 import axios from "../Axios/Axios";
 import { toast } from "react-toastify";
+import { useRecoilState } from "recoil";
+import { Reload } from "../Atom/Atom";
 
 export const PincodeDetails = ({ pincode, location, status }) => {
   const [edit, setEdit] = useState(false);
@@ -10,6 +12,7 @@ export const PincodeDetails = ({ pincode, location, status }) => {
     location: location,
     status: status,
   });
+  const [reload,setReload]=useRecoilState(Reload);
   const handleEdit = (e) => {
     e.preventDefault();
     setEdit(!edit);
@@ -34,6 +37,7 @@ export const PincodeDetails = ({ pincode, location, status }) => {
         })
         .then((result) => {
           setEdit(!edit);
+          setReload(!reload);
           if (result.data.status) {
             toast.success("Updated");
           } else {

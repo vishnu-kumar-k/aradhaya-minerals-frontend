@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Form } from "react-bootstrap";
+import {  Form } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "../Axios/Axios";
 import { useRecoilState } from "recoil";

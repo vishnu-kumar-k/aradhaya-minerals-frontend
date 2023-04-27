@@ -34,3 +34,7 @@ export const Fetch=atom({
     key:"Fetch",
     default:1
 })
+export const Reload=atom({
+    key:"Reload",
+    default:true,
+})

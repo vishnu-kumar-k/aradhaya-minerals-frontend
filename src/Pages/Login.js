@@ -4,12 +4,12 @@ import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "../Axios/Axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { Col, Container, Row } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import { AdminDetails, Load } from "../Atom/Atom";
 import Loading from "../Component/Loading";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,17 +36,18 @@ const Login = () => {
             name: res.data.name,
             jwt: res.data.admin_jwt,
           });
+          
 
           setTimeout(() => {
             navigate("/admin");
           }, 3000);
         } else {
-          toast.error(res.data.msg);
+          toast.error(`${res.data.msg}`);
         }
       });
   };
   return (
-    <>
+    <><ToastContainer />
       {loading ? (
         <Loading />
       ) : (
@@ -87,7 +88,6 @@ const Login = () => {
               </Col>
             </Row>
           </Container>
-          <ToastContainer />
         </div>
       )}
     </>

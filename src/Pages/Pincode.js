@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../Axios/Axios";
 import { useRecoilState } from "recoil";
-import { Load } from "../Atom/Atom";
+import { Load, Reload } from "../Atom/Atom";
 import Loading from "../Component/Loading";
 import { Container, Form, Table } from "react-bootstrap";
 import { PincodeDetails } from "./PincodeDetails";
@@ -16,6 +16,7 @@ export const Pincode = () => {
     location: "",
     status: 1,
   });
+  const [reload,setReload]=useRecoilState(Reload);
   useEffect(() => {
     axios
       .get("/pincode")
@@ -23,7 +24,7 @@ export const Pincode = () => {
         setPincode(result.data.result);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [reload]);
   const handleAdd = (e) => {
     e.preventDefault();
     setAdd(!add);
@@ -56,6 +57,7 @@ export const Pincode = () => {
         .then((result) => {
           if (result.data.status) {
             setAdd(!add);
+            setReload(!reload);
             toast.success("Product add successfully");
           }
           else
